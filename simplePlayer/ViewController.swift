@@ -12,6 +12,8 @@ import MediaPlayer
 class ViewController: UIViewController {
     
     var player:AVPlayer!
+    
+    var image = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,12 +63,20 @@ class ViewController: UIViewController {
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
         var nowPlayingInfo = [String: Any]()
         
-        //nowPlayingInfo[MPNowPlayingInfoPropertyAssetURL] = "ddd.com"
+        nowPlayingInfo[MPNowPlayingInfoPropertyAssetURL] = URL(string: "sss.com")
         nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = NSNumber(value: MPNowPlayingInfoMediaType.audio.rawValue)
         nowPlayingInfo[MPNowPlayingInfoPropertyIsLiveStream] = true
         nowPlayingInfo[MPMediaItemPropertyTitle] = "metadata.title"
         nowPlayingInfo[MPMediaItemPropertyArtist] = "metadata.artist"
-        //nowPlayingInfo[MPMediaItemPropertyArtwork] = metadata.artwork
+        
+        image = UIImage(named: "Colosseum.jpg")!
+        
+        let mediaArtwork = MPMediaItemArtwork(boundsSize: image.size) {
+            (size: CGSize) -> UIImage in
+            return self.image
+        }
+        
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = mediaArtwork
         nowPlayingInfo[MPMediaItemPropertyAlbumArtist] = "metadata.albumArtist"
         nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = "metadata.albumTitle"
         
